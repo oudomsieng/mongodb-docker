@@ -1,10 +1,9 @@
 FROM centos:centos7
 MAINTAINER The CentOS Project <cloud-ops@centos.org>
 
-RUN yum -y update; yum clean all
-RUN yum -y install epel-release; yum clean all
-RUN yum -y install mongodb-server; yum clean all
+COPY mongodb-org-3.2.repo /etc/yum.repos.d/mongodb-org-3.2.repo
+RUN yum install -y mongodb-org; yum clean all
 RUN mkdir -p /data/db
+COPY mongod.conf /etc/mongod.conf
 
 EXPOSE 27017
-ENTRYPOINT ["/usr/bin/mongod"]
